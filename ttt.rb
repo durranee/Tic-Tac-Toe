@@ -45,5 +45,27 @@ class TickTacToe
     !@board.join.include?(' ')
   end
 
+# method to get input from user (checks if board is full and if
+# location selected is valid i-e if cell is empty. Also sets the value)
+# puts an error if invalid choice
+  def get_input (player_num)
+    input = ' '
+    until game_full?
+      print "Player#{player_num} ( #{@players[player_num]} ),
+      please choose an empty position: "
+      input = gets.chomp.to_i
+      input -= 1
+
+      if (within_limit?(input) && cell_empty?(input))
+        # setting input from here instead of returning input
+        # will fix later to make more sense
+        set_value(player_num, input)
+        return # input
+      else
+        input = ' '
+        puts 'Error! Invalid choice.'
+      end
+    end
+  end
 
 end

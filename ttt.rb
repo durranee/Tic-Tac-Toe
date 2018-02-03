@@ -35,4 +35,15 @@ class TickTacToe
     (input >= 0 && input < 9)
   end
 
+# method to check if location chosen is empty
+  def cell_empty? (index)
+    @board[index] == ' '
+  end
+
+# method to check if board is full, returns false if no empty spaces
+  def game_full?
+    !@board.join.include?(' ')
+  end
+
+
 end

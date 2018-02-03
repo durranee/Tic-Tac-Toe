@@ -68,4 +68,25 @@ class TickTacToe
     end
   end
 
+
+# This method winner? checks if we have a winner
+# ro be run after every turn
+  def winner?
+  # winning combinations (indexes)
+  # 0,1,2 # 3,4,5 # 6,7,8 # 0,3,6
+  # 1,4,7 # 2,5,8 # 0,4,8 # 2,4,6
+  winning_combinations = [
+                          [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                          [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+                        ]
+  winning_combinations.each { |comb_set|
+    if @board[comb_set[0]] + @board[comb_set[1]] + @board[comb_set[2]] == 'XXX' ||
+    @board[comb_set[0]] + @board[comb_set[1]] + @board[comb_set[2]] == 'OOO'
+      puts "WE HAVE A WINNNEERRRRRR"
+    end
+  }
+  # There's a lot of improvement needed. Method should just return true or false
+  # For now just puts "WE HAVE  WINNER"
+  end
+
 end

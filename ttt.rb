@@ -1,3 +1,4 @@
+
 # Requirements
 # initialize :- (to be revised) initialize array
 # print_board :- A method to print ttt table pretty
@@ -20,9 +21,10 @@ class TickTacToe
 # method to print the board on the screen
   def print_board
     system('clear') # Clears the shell window
-    puts "[#{@board[0]}][#{@board[1]}][#{@board[2]}]"
-    puts "[#{@board[3]}][#{@board[4]}][#{@board[5]}]"
-    puts "[#{@board[6]}][#{@board[7]}][#{@board[8]}]"
+    @boards.each_index {|index, value|
+      print "[#{@board[index]}]"
+      print "\n" if (index+1) % 3 == 0
+    }
   end
 
 # method set_value to insert X or O in the location depending on player num

@@ -28,6 +28,7 @@ class TickTacToe
 # method to print the board on the screen
   def print_board
     system('clear') # Clears the shell window
+    puts '********** Welcome to Tic Tac Toe **********'
     @board.each_index { |index|
       print "[#{@board[index]}]"
       print "\n" if ((index+1) % 3).zero?

@@ -84,15 +84,15 @@ class TickTacToe
     combination = comb_set.map { |indexes| @board[indexes] }
 
     if combination.join == 'XXX' || combination.join == 'OOO'
-        #returns true if win else reset combination
-        puts "******* PLAYER #{current_player} WON!!*******"
-        return true
-      end
+      #returns true if win else reset combination
+      puts "******* PLAYER #{current_player} WON!!*******"
+      return true
+    end
       combination = ['']
   }
   # There's a lot of improvement needed. Method should just return true or false
   # For now just puts "WE HAVE  WINNER"
-  return false
+  return false # will execute if no winning combination found
 end
 
 end
@@ -104,7 +104,7 @@ new_game.print_board
 while new_game.has_spaces? && !new_game.winner?(current_player)
   new_game.get_input(current_player)
   new_game.print_board
-  new_game.winner?(current_player)
+  #new_game.winner?(current_player)
 
   current_player += 1
   current_player = 1 if (current_player > 2)

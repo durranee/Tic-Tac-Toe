@@ -5,7 +5,7 @@
 # set set_value (player_no, position)
 # within_limit (input) :- to check if input is within limit (0-9)
 # cell_empty? (index) :- checks if particular cell empty
-# game_full? :- checking if there's board is full
+# has_spaces? :- checking if there's board is full
 # get_input (player_num) :- method to get input from user
 # winner? :- A method to check if anyones won
 
@@ -21,9 +21,9 @@ class TickTacToe
 # method to print the board on the screen
   def print_board
     system('clear') # Clears the shell window
-    @boards.each_index {|index, value|
+    @board.each_index { |index|
       print "[#{@board[index]}]"
-      print "\n" if (index+1) % 3 == 0
+      print "\n" if ((index+1) % 3).zero?
     }
   end
 
@@ -43,8 +43,8 @@ class TickTacToe
   end
 
 # method to check if board is full, returns false if no empty spaces
-  def game_full?
-    !@board.join.include?(' ')
+  def has_spaces?
+    @board.join.include?(' ')
   end
 
 # method to get input from user (checks if board is full and if
@@ -52,9 +52,9 @@ class TickTacToe
 # puts an error if invalid choice
   def get_input (player_num)
     input = ' '
-    until game_full?
-      print "Player#{player_num} ( #{@players[player_num]} ),
-      please choose an empty position: "
+    while has_spaces?
+      puts "Player#{player_num} ( #{@players[player_num]} )"
+      print "please choose an empty position: "
       input = gets.chomp.to_i
       input -= 1
 
@@ -72,7 +72,7 @@ class TickTacToe
 
 # This method winner? checks if we have a winner
 # to be executed after every turn
-  def winner?
+  def winner?(current_player)
   # winning combinations (indexes)
   # 0,1,2 # 3,4,5 # 6,7,8 # 0,3,6
   # 1,4,7 # 2,5,8 # 0,4,8 # 2,4,6
@@ -83,12 +83,29 @@ class TickTacToe
   winning_combinations.each { |comb_set|
     combination = comb_set.map { |indexes| @board[indexes] }
 
-  combination.join == 'XXX' || combination.join == 'OOO' ?
-  (puts "WE HAVE A WINNNEERRRRRR") : combination = ['']
-
+    if combination.join == 'XXX' || combination.join == 'OOO'
+        #returns true if win else reset combination
+        puts "******* PLAYER #{current_player} WON!!*******"
+        return true
+      end
+      combination = ['']
   }
   # There's a lot of improvement needed. Method should just return true or false
   # For now just puts "WE HAVE  WINNER"
-  end
+  return false
+end
 
+end
+
+new_game = TickTacToe.new
+current_player = 1
+new_game.print_board
+
+while new_game.has_spaces? && !new_game.winner?(current_player)
+  new_game.get_input(current_player)
+  new_game.print_board
+  new_game.winner?(current_player)
+
+  current_player += 1
+  current_player = 1 if (current_player > 2)
 end

@@ -6,7 +6,7 @@
 # within_limit (input) :- to check if input is within limit (0-9)
 # cell_empty? (index) :- checks if particular cell empty
 # has_spaces? :- checking if there's board is full
-# get_input (player_num) :- method to get input from user
+# get_user_input (player_num) :- method to get input from user
 # winner? :- A method to check if anyones won
 # print_result(current_player) :- Prints message if game is won
 
@@ -74,16 +74,30 @@ end
   end
 
 
+def get_computer_input
+  position = rand(9)
+  if cell_empty?(position)
+    position = rand(9)
+  end
+  return position
+end
 
 # method to get input from user (checks if board is full and if
 # location selected is valid i-e if cell is empty. Also sets the value)
 # puts an error if invalid choice
-  def get_input (player)
+  def get_user_input (player)
     input = ' '
     while has_spaces?
       # if player is computer = just randomly choose a number
       # TO BE IMPLEMENTED
+
       print "#{player}, please choose an empty position: "
+
+      if player.eql?('Computer')
+        position = get_computer_input
+        set_value(@players_and_keys[player], position)
+        return
+      else
       position = (gets.chomp.to_i - 1)
 
       if (within_limit?(position) && cell_empty?(position))
@@ -95,6 +109,7 @@ end
         input = ' '
         puts 'Error! Invalid choice.'
       end
+    end
     end
   end
 
@@ -158,7 +173,7 @@ def start_game
   new_game.print_board
 
   while new_game.has_spaces? && !new_game.winner?(current_player)
-    new_game.get_input(current_player)
+    new_game.get_user_input(current_player)
     new_game.print_board
     break if new_game.winner?(current_player)
     #####################################################

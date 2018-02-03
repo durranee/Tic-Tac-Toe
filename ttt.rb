@@ -8,14 +8,21 @@
 # has_spaces? :- checking if there's board is full
 # get_input (player_num) :- method to get input from user
 # winner? :- A method to check if anyones won
+# print_result(current_player) :- Prints message if game is won
+
+# start_game () :- entry point to the game (out of class)
+# get_players_name(num) :- collects a name, returns string (out of class)
+# uniq_name? (p1, p2) :- checks if both names are uniq (return bool)
+
 
 # Main class to run the game
 class TickTacToe
   # initializing board with empty spaces
-  def initialize
+  def initialize (p1, p2)
+    @winner = :no_one
     @board = []
+    @players_and_keys = { p1 => 'X', p2 => 'O' }
     9.times { @board << ' ' }
-    @players = { 1 => 'X', 2 => 'O' }
   end
 
 # method to print the board on the screen
@@ -27,9 +34,33 @@ class TickTacToe
     }
   end
 
+# method to check if board is full, returns false if no empty spaces
+  def has_spaces?
+    @board.join.include?(' ')
+  end
+
+  def is_it_a_draw (current_player)
+    @winner == (:no_one && !has_spaces?)
+  end
+
+  def print_draw
+    puts "****** GAME OVER ******"
+    puts "****** IT'S A DRAW ******"
+  end
+
+  def print_win
+    puts "****** GAME OVER ******"
+    puts "****** #{@winner.upcase} WON ******"
+  end
+
+# Printing result message
+def print_result
+  @winner.eql?(:no_one) ? print_draw : print_win
+end
+
 # method set_value to insert X or O in the location depending on player num
-    def set_value (player_no, position)
-      @board[position] = @players[player_no]
+    def set_value (value, position)
+      @board[position] = value
     end
 
 # returns true if user entered between 1-9 for cell number
@@ -42,26 +73,23 @@ class TickTacToe
     @board[index] == ' '
   end
 
-# method to check if board is full, returns false if no empty spaces
-  def has_spaces?
-    @board.join.include?(' ')
-  end
+
 
 # method to get input from user (checks if board is full and if
 # location selected is valid i-e if cell is empty. Also sets the value)
 # puts an error if invalid choice
-  def get_input (player_num)
+  def get_input (player)
     input = ' '
     while has_spaces?
-      puts "Player#{player_num} ( #{@players[player_num]} )"
-      print "please choose an empty position: "
-      input = gets.chomp.to_i
-      input -= 1
+      # if player is computer = just randomly choose a number
+      # TO BE IMPLEMENTED
+      print "#{player}, please choose an empty position: "
+      position = (gets.chomp.to_i - 1)
 
-      if (within_limit?(input) && cell_empty?(input))
+      if (within_limit?(position) && cell_empty?(position))
         # setting input from here instead of returning input
         # will fix later to make more sense
-        set_value(player_num, input)
+        set_value(@players_and_keys[player], position)
         return # input
       else
         input = ' '
@@ -84,28 +112,62 @@ class TickTacToe
     combination = comb_set.map { |indexes| @board[indexes] }
 
     if combination.join == 'XXX' || combination.join == 'OOO'
-      #returns true if win else reset combination
-      puts "******* PLAYER #{current_player} WON!!*******"
+      # returns true if win else reset combination
+      # save winner name in @winner
+      @winner = current_player
       return true
     end
       combination = ['']
   }
-  # There's a lot of improvement needed. Method should just return true or false
-  # For now just puts "WE HAVE  WINNER"
-  return false # will execute if no winning combination found
-end
+    return false # will execute if no winning combination found
+  end
+
 
 end
 
-new_game = TickTacToe.new
-current_player = 1
-new_game.print_board
+def uniq_name? (p1, p2)
+  if p1.downcase == p2.downcase
+  puts "Error! Both names can't be silimar"
+  return false
+  end
+  return true
+end
 
-while new_game.has_spaces? && !new_game.winner?(current_player)
-  new_game.get_input(current_player)
+def get_players_name(num)
+  print "Please enter the name for player #{num}: "
+  print "to play with computer, type computer "
+  gets.chomp.capitalize
+end
+
+def start_game
+  system('clear')
+  puts '********** Welcome to Tic Tac Toe **********'
+
+  player1 = get_players_name(1)
+  player2 = get_players_name(2)
+
+
+  until uniq_name?(player1, player2)
+    player1 = get_players_name(1)
+    player2 = get_players_name(2)
+  end
+
+  new_game = TickTacToe.new(player1, player2)
+
+  current_player = player1
   new_game.print_board
-  #new_game.winner?(current_player)
 
-  current_player += 1
-  current_player = 1 if (current_player > 2)
+  while new_game.has_spaces? && !new_game.winner?(current_player)
+    new_game.get_input(current_player)
+    new_game.print_board
+    break if new_game.winner?(current_player)
+    #####################################################
+    # need to print winning message before the code below
+    current_player = current_player.eql?(player1) ? player2 : player1
+  end
+  new_game.print_result
+  #new_game.is_it_a_draw(current_player)
+
 end
+
+start_game

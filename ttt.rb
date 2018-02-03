@@ -9,5 +9,11 @@
 # winner? :- A method to check if anyones won
 
 class TickTacToe
-
+  # initializing board with empty spaces
+  def initialize
+    @board = []
+    9.times { @board << ' ' }
+    @players = { 1 => 'X', 2 => 'O' }
+  end
+    
 end

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 
 # Requirements
 # initialize :- (to be revised) initialize array
@@ -77,7 +78,7 @@ end
 
 def get_computer_input
   position = rand(9)
-  if cell_empty?(position)
+  unless cell_empty?(position)
     position = rand(9)
   end
   return position
@@ -135,7 +136,7 @@ end
     end
       combination = ['']
   }
-    return false # will execute if no winning combination found
+  return false # will execute if no winning combination found
   end
 
 
@@ -150,8 +151,8 @@ def uniq_name? (p1, p2)
 end
 
 def get_players_name(num)
-  print "Please enter the name for player #{num}: "
-  print "to play with computer, type computer "
+  print "Please enter the name for player #{num} \n"
+  print "to play with computer, \'type computer\': "
   gets.chomp.capitalize
 end
 

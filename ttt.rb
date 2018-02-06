@@ -52,8 +52,8 @@ class TickTacToe
   end
 
   def print_win
-    puts "****** GAME OVER ******"
-    puts "****** #{@winner.upcase} WON ******"
+    puts "****** GAME OVER ******".green
+    puts "****** #{@winner.upcase} WON ******".green
   end
 
 # Printing result message
@@ -110,7 +110,7 @@ end
         return # input
       else
         input = ' '
-        puts 'Error! Invalid choice.'
+        puts 'Error! Invalid choice.'.red
       end
     end
     end

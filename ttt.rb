@@ -15,7 +15,7 @@
 # get_players_name(num) :- collects a name, returns string (out of class)
 # uniq_name? (p1, p2) :- checks if both names are uniq (return bool)
 
-
+require 'colorize'
 # Main class to run the game
 class TickTacToe
   # initializing board with empty spaces
@@ -29,9 +29,10 @@ class TickTacToe
 # method to print the board on the screen
   def print_board
     system('clear') # Clears the shell window
-    puts '********** Welcome to Tic Tac Toe **********'
+    puts '********** Welcome to Tic Tac Toe **********'.blue
     @board.each_index { |index|
-      print "[#{@board[index]}]"
+      @board[index].eql?('X') ? (print "[#{@board[index].red}]") :
+      (print "[#{@board[index].green}]")
       print "\n" if ((index+1) % 3).zero?
     }
   end
@@ -46,8 +47,8 @@ class TickTacToe
   end
 
   def print_draw
-    puts "****** GAME OVER ******"
-    puts "****** IT'S A DRAW ******"
+    puts "****** GAME OVER ******".red
+    puts "****** IT'S A DRAW ******".red
   end
 
   def print_win
@@ -158,7 +159,7 @@ end
 
 def start_game
   system('clear')
-  puts '********** Welcome to Tic Tac Toe **********'
+  puts '********** Welcome to Tic Tac Toe **********'.blue
 
   player1 = get_players_name(1)
   player2 = get_players_name(2)

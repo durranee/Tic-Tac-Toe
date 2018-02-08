@@ -2,7 +2,7 @@
 
 [X][O][X]<br />
 [O][X][O]<br />
-[&nbsp;][X][&nbsp;]<br />
+[&nbsp; ][X][&nbsp; ]<br />
 
 
 Terminal based Tic-Tac-Toe game made using Ruby. Used 'colorized' gem for better readability.
@@ -26,6 +26,6 @@ When a result is reached (either a win or a draw), game will puts the result (in
 
 [X][O][X]<br />
 [O][X][O]<br />
-[X][&nbsp;][&nbsp;]<br />
+[X][&nbsp; ][&nbsp; ]<br />
 ****** GAME OVER ******<br />
 ****** USER 1 WON ******

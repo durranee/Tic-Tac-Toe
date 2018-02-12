@@ -79,9 +79,7 @@ end
 
 def get_computer_input
   position = rand(9)
-  unless cell_empty?(position)
-    position = rand(9)
-  end
+  position = rand(9) until cell_empty?(position)
   return position
 end
 
@@ -98,6 +96,7 @@ end
 
       if player.eql?('Computer')
         position = get_computer_input
+        print (position + 1) # Priting index+1 so it looks like a legit location
         set_value(@players_and_keys[player], position)
         return
       else
